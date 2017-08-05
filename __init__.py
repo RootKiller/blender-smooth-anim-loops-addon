@@ -9,6 +9,7 @@ bl_info = {
 
 import bpy
 import sys
+import math
 import random
 
 class SmoothLoopNodes(bpy.types.Operator):
@@ -34,22 +35,21 @@ class SmoothLoopNodes(bpy.types.Operator):
         ts = bpy.context.tool_settings
         falloff = ts.proportional_edit_falloff
         print(falloff)
-        print(dist)
         if falloff == 'SHARP':
             return dist * dist
         elif falloff == 'SMOOTH':
             return 3.0 * dist * dist - 2.0 * dist * dist * dist
         elif falloff == 'ROOT':
             return math.sqrt(dist)
-        elif falloff == 'LIN':
+        elif falloff == 'LINEAR':
             return dist
-        elif falloff == 'CONST':
+        elif falloff == 'CONSTANT':
             return 1.0
         elif falloff == 'SPHERE':
             return math.sqrt(2 * dist - dist * dist)
         elif falloff == 'RANDOM':
             return random.random() * dist
-        elif falloff == 'INVSQUARE':
+        elif falloff == 'INVERSE_SQUARE':
             return dist * (2.0 - dist)
         else:
             return 1.0
